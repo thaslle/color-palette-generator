@@ -56,20 +56,27 @@
       display: block;
       transition: all var(--transition-duration) var(--transition-elastic);
 
-      &.labelCopied {
+      &.labelMain {
+        position: relative;
+      }
+      &.labelHint {
+        position: absolute;
+        top: 1em;
         opacity: 0;
       }
     }
 
     &.copied {
-      width: 8ch !important;
+      width: max-content !important;
 
       span {
         transform: translateY(-100%);
         &.labelMain {
+          position: absolute;
           opacity: 0;
         }
-        &.labelCopied {
+        &.labelHint {
+          position: relative;
           opacity: 1;
         }
       }

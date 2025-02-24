@@ -1,35 +1,40 @@
 import { useEffect } from 'react'
 import { Color } from '../color'
 import { useStore } from '~/hooks/use-store'
-import { RGB } from '~/utils/types'
+import {
+  getHexCode,
+  hexToRGB,
+  isDarkColor,
+  randomHexColor,
+} from '~/utils/color'
 
 import s from './palette.module.scss'
 
 export const Palette = () => {
+  // const paletteList = [
+  //   { name: 'Electric Blue', code: '#dbd834' },
+  //   { name: 'Deep Plum', code: '#e7ff97' },
+  //   { name: 'Bright Coral', code: '#e84855' },
+  //   { name: 'Light Cream', code: '#ff5700' },
+  //   { name: 'Vibrant Orange', code: '#2b3a67' },
+  // ]
+
   const paletteList = [
-    { name: 'Electric Blue', code: '#dbd834' },
-    { name: 'Deep Plum', code: '#e7ff97' },
-    { name: 'Bright Coral', code: '#e84855' },
-    { name: 'Light Cream', code: '#ff5700' },
-    { name: 'Vibrant Orange', code: '#2b3a67' },
+    { code: randomHexColor() },
+    { code: randomHexColor() },
+    { code: randomHexColor() },
+    { code: randomHexColor() },
+    { code: randomHexColor() },
   ]
 
-  const getHexCode = (colorCode: string): string => {
-    return colorCode.replace('#', '')
-  }
+  // const { response, loading } = useStore();
 
-  const hexToRGB = (hex: string): RGB => {
-    const r = parseInt(hex.slice(0, 2), 16)
-    const g = parseInt(hex.slice(2, 4), 16)
-    const b = parseInt(hex.slice(4, 6), 16)
-
-    return { r: r, g: g, b: b }
-  }
-
-  const isDarkColor = (color: RGB): boolean => {
-    const luminance = 0.2126 * color.r + 0.7152 * color.g + 0.0722 * color.b
-    return luminance < 128
-  }
+  // return (
+  //   <div>
+  //     {loading && <p>Loading...</p>}
+  //     {!loading && response && <p>Response: {response}</p>}
+  //   </div>
+  // );
 
   // Processing palette
   const processedPalette = paletteList.map((color) => {

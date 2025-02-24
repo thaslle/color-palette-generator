@@ -1,27 +1,44 @@
 import { clsx } from 'clsx'
-import React, { useState } from 'react'
+import React from 'react'
 import { IconMonochromatic } from './icons'
+import { useStore } from '~/hooks/use-store'
+
 import s from './search.module.scss'
 
-export const Monochromatic = () => {
-  const [isChecked, setIsChecked] = useState(false)
+type MonochromaticProps = {
+  isMonochromatic: boolean
+  setIsMonochromatic: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const Monochromatic: React.FC<MonochromaticProps> = ({
+  isMonochromatic,
+  setIsMonochromatic,
+}) => {
+  const setHint = useStore((state) => state.setHint)
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked)
+    setIsMonochromatic(e.target.checked)
+    setHint(
+      e.target.checked
+        ? 'Changed to monochromatic!'
+        : 'Changed to colored pallete!',
+    )
   }
 
   return (
     <label
-      className={clsx(s.monochromatic, { [s.checked]: isChecked })}
+      className={clsx(s.monochromatic, { [s.checked]: isMonochromatic })}
       data-label={
-        isChecked ? 'Change to colored pallete' : 'Change to monochromatic'
+        isMonochromatic
+          ? 'Change to colored pallete'
+          : 'Change to monochromatic'
       }
     >
       <input
         type="checkbox"
         name="monochromatic"
         className={s.checkbox}
-        checked={isChecked}
+        checked={isMonochromatic}
         onChange={handleCheckboxChange}
       />
       <IconMonochromatic />

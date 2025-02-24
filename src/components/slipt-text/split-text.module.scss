@@ -48,7 +48,7 @@
 
     &.reverse .word .letter span {
       transform: translateX(0);
-      animation: var(--transition-text-duration) var(--transition-easing) 0.5s
+      animation: var(--transition-text-duration) var(--transition-easing) 0s
         forwards 1 normal letterHideRight !important;
     }
   }

@@ -1,0 +1,99 @@
+.textSplitted {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  column-gap: 0.3ch;
+  position: relative;
+  line-height: 1.5em;
+
+  .word {
+    display: block;
+    height: 1.5em;
+    line-height: 1.5em;
+    white-space: nowrap;
+
+    .letter {
+      display: inline-block;
+      height: 1.5em;
+      line-height: 1.5em;
+      padding-right: 0.05rem;
+      margin-right: -0.05rem;
+      overflow: hidden;
+
+      span {
+        display: inline-block;
+        line-height: 1.5em;
+        height: 1.5em;
+        transform: translateX(-120%);
+
+        animation: var(--transition-text-duration) var(--transition-easing) 0.5s
+          forwards 1 normal letterShow;
+      }
+    }
+  }
+
+  &.reverse .word .letter span {
+    transform: translateX(0%);
+    animation: var(--transition-text-duration) var(--transition-easing) 0.5s
+      forwards 1 normal letterHide;
+  }
+
+  &.fromRight {
+    .word .letter span {
+      transform: translateX(120%);
+      animation: var(--transition-text-duration) var(--transition-easing) 0.5s
+        forwards 1 normal letterShowRight;
+    }
+
+    &.reverse .word .letter span {
+      transform: translateX(0);
+      animation: var(--transition-text-duration) var(--transition-easing) 0.5s
+        forwards 1 normal letterHideRight !important;
+    }
+  }
+
+  @keyframes letterShow {
+    0% {
+      opacity: 0;
+      transform: translateX(-120%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes letterHide {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-120%);
+    }
+  }
+
+  @keyframes letterShowRight {
+    0% {
+      opacity: 0;
+      transform: translateX(120%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes letterHideRight {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(120%);
+    }
+  }
+}

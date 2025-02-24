@@ -1,0 +1,38 @@
+.showhide {
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  color: var(--last-column-color);
+
+  .button {
+    all: unset;
+    display: grid;
+    grid-template-areas: 'button';
+    align-items: center;
+    justify-items: end;
+    cursor: pointer;
+
+    &:active {
+      transform: translate(1px, 1px);
+    }
+
+    .show {
+      grid-area: button;
+      width: max-content;
+      overflow: hidden;
+
+      span {
+        display: block;
+        transform: translateX(120%);
+        transition: all var(--transition-text-duration) var(--transition-easing);
+      }
+    }
+    .hide {
+      grid-area: button;
+    }
+
+    &.hidden .show span {
+      transform: translateX(0);
+    }
+  }
+}

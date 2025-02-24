@@ -1,0 +1,68 @@
+@use '@/inter-ui/default' with (
+  $inter-font-display: swap,
+  $inter-font-path: '@/inter-ui/web'
+);
+
+@use '@/inter-ui/variable' with (
+  $inter-font-display: swap,
+  $inter-font-path: '@/inter-ui/variable'
+);
+
+@include default.all;
+@include variable.all;
+
+:root {
+  --font-family: 'Inter', 'Arial', 'Helvetica', 'system-ui';
+  --color-dark: #444;
+  --color-light: #fff;
+  --color-icons: #555;
+  --color-highlight: #dfdfdf;
+  --color-material: rgba(255, 255, 255, 0.9);
+  --background: #222;
+
+  --transition-duration: 0.4s;
+  --transition-text-duration: 0.8s;
+  --transition-easing: ease-in-out;
+  --transition-elastic: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  --fisrt-column-color: var(--color-dark);
+  --last-column-color: var(--color-dark);
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    --font-family: 'InterVariable', 'Arial', 'Helvetica', 'system-ui';
+  }
+}
+
+@keyframes splitted-text-animation-override {
+  0% {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+  100% {
+    opacity: 0 !important;
+    transform: translateX(120%) !important;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  touch-action: none;
+  overflow: hidden;
+
+  font-family: var(--font-family);
+  font-optical-sizing: auto;
+  font-weight: 550;
+  font-style: normal;
+  letter-spacing: -0.05em;
+  color: var(--color-dark);
+  background-color: var(--background);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+

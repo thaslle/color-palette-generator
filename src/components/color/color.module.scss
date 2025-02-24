@@ -1,0 +1,29 @@
+.color {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 2rem 1rem;
+
+  &.dark {
+    color: var(--color-light);
+  }
+
+  .header {
+    padding-block: 2rem;
+    cursor: pointer;
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+    .description {
+      height: 1.2rem;
+    }
+
+    &:active {
+      transform: translate(1px, 1px);
+    }
+  }
+}

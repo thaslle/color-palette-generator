@@ -1,0 +1,95 @@
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  z-index: 1000;
+
+  //   &:not(.label) {
+  //     mix-blend-mode: difference;
+  //   }
+
+  .pointer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+
+    clip-path: inset(0 round 0.8rem);
+    background-color: #fff;
+
+    transition: all var(--transition-duration) var(--transition-elastic);
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    position: absolute;
+    bottom: 0.3rem;
+    left: 0.3rem;
+
+    opacity: 0;
+    font-size: 0.9rem;
+    padding: 0.4em 0.8em;
+    height: 1.8em;
+    max-width: max-content;
+    white-space: nowrap;
+
+    transform: scale(0);
+    transform-origin: left bottom;
+
+    background-color: var(--color-material);
+    backdrop-filter: blur(1rem);
+    border-radius: 0.8rem 0.8rem 0.8rem 0;
+
+    transition: all var(--transition-duration) var(--transition-elastic);
+
+    span {
+      display: block;
+      transition: all var(--transition-duration) var(--transition-elastic);
+
+      &.labelCopied {
+        opacity: 0;
+      }
+    }
+
+    &.copied {
+      width: 8ch !important;
+
+      span {
+        transform: translateY(-100%);
+        &.labelMain {
+          opacity: 0;
+        }
+        &.labelCopied {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &.label {
+    .pointer {
+      opacity: 0;
+      transform: translate(0.3em, calc(-50% - 0.3em));
+
+      clip-path: inset(0 round 0.8rem 0.8rem 0.8rem 0);
+    }
+    .text {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media only screen and (max-with: 767px) {
+    display: none;
+  }
+}

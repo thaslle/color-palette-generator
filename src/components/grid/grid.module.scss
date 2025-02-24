@@ -1,0 +1,20 @@
+.grid {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-areas: 'full';
+
+  .main {
+    position: relative;
+    grid-area: full;
+    z-index: 1;
+  }
+  .nav {
+    position: relative;
+    grid-area: full;
+    z-index: 2;
+    display: grid;
+    align-items: end;
+    pointer-events: none;
+  }
+}

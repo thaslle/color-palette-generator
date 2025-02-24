@@ -1,6 +1,9 @@
 import Groq from 'groq-sdk'
 
-const groq = new Groq({ apiKey: process.env.REACT_APP_GROQ_API_KEY })
+const groq = new Groq({
+  apiKey: import.meta.env.VITE_GROQ_API_KEY,
+  dangerouslyAllowBrowser: true, // Remove this later
+})
 
 export async function getGroqChatCompletion(
   query: string,

@@ -1,0 +1,32 @@
+.textSplitted {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  column-gap: 0.3ch;
+  position: relative;
+  line-height: 1.5em;
+
+  .word {
+    display: block;
+    height: 1.5em;
+    line-height: 1.5em;
+    white-space: nowrap;
+
+    .letter {
+      display: inline-block;
+      height: 1.5em;
+      line-height: 1.5em;
+      padding-right: 0.05rem;
+      margin-right: -0.05rem;
+      overflow: hidden;
+
+      span {
+        display: inline-block;
+        line-height: 1.5em;
+        height: 1.5em;
+      }
+    }
+  }
+}
+

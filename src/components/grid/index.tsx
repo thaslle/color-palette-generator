@@ -1,4 +1,3 @@
-import { Blur } from '~/components/blur'
 import { Palette } from '~/components/palette'
 import { Controls } from '~/components/controls'
 
@@ -8,9 +7,7 @@ export const Grid = () => {
   return (
     <section className={s.grid}>
       <main className={s.main}>
-        <Blur>
-          <Palette />
-        </Blur>
+        <Palette />
       </main>
       <nav className={s.nav}>
         <Controls />
@@ -18,3 +15,4 @@ export const Grid = () => {
     </section>
   )
 }
+

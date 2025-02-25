@@ -6,4 +6,6 @@ export type ColorProps = {
   hex: string
   rgb: RGB
   isDark: boolean
+  index: number
 }
+

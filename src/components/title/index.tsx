@@ -1,4 +1,4 @@
-import { SplitText } from '../slipt-text'
+import { SplitText } from '../split-text'
 import { useStore } from '~/hooks/use-store'
 
 import s from './title.module.scss'
@@ -12,3 +12,4 @@ export const Title = () => {
     </div>
   )
 }
+

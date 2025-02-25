@@ -24,7 +24,7 @@ export const Blur: React.FC<BlurProps> = ({ children }) => {
     <>
       <svg className={s.svg}>
         <filter id="blur-filter">
-          <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="150">
+          <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="250">
             <animate
               ref={animateRef}
               id="blur-animation"
@@ -57,3 +57,4 @@ export const Blur: React.FC<BlurProps> = ({ children }) => {
     </>
   )
 }
+

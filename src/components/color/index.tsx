@@ -1,6 +1,6 @@
 import { clsx } from 'clsx'
 import { ColorProps } from '~/utils/types'
-import { SplitText } from '../slipt-text'
+import { SplitText } from '../split-text'
 import { useStore } from '~/hooks/use-store'
 
 import s from './color.module.scss'
@@ -27,6 +27,7 @@ export const Color = ({ props }: { props: ColorProps }) => {
           className={s.header}
           data-label="Click to copy"
           onClick={() => copyToClipboard(props.code)}
+          style={{ pointerEvents: showControls ? 'visible' : 'none' }}
         >
           <h2 className={s.title}>
             <SplitText reverse={!showControls} delay={1.2}>
@@ -40,10 +41,7 @@ export const Color = ({ props }: { props: ColorProps }) => {
           </div>
         </div>
       )}
-      <div
-        className={s.background}
-        style={{ backgroundColor: props.code }}
-      ></div>
     </div>
   )
 }
+

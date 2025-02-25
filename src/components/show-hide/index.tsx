@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
-import { SplitText } from '../slipt-text'
+import { motion, AnimatePresence } from 'motion/react'
+import { SplitText } from '../split-text'
 import { useStore } from '~/hooks/use-store'
 
 import s from './show-hide.module.scss'
@@ -18,10 +19,27 @@ export const ShowHide = () => {
             → Hide controls
           </SplitText>
         </div>
-        <div className={s.show}>
-          <span>←</span>
-        </div>
+        <AnimatePresence>
+          <div className={s.show}>
+            {!showControls && (
+              <motion.span
+                initial="hidden"
+                animate="show"
+                exit="hide"
+                variants={{
+                  hidden: { opacity: 0, x: 120 },
+                  show: { opacity: 1, x: 0 },
+                  hide: { opacity: 0, x: 120 },
+                }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+              >
+                ←
+              </motion.span>
+            )}
+          </div>
+        </AnimatePresence>
       </button>
     </div>
   )
 }
+

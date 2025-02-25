@@ -1,5 +1,27 @@
-.palette {
+.grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  grid-template-areas: 'stack';
+
+  .stack {
+    grid-area: stack;
+    position: relative;
+    display: grid;
+    height: 100%;
+
+    &.names {
+      z-index: 2;
+    }
+    &.colors {
+      z-index: 1;
+    }
+  }
+
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: 100%;
+  }
 }
+

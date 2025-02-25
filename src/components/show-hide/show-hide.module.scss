@@ -23,16 +23,11 @@
 
       span {
         display: block;
-        transform: translateX(120%);
-        transition: all var(--transition-text-duration) var(--transition-easing);
       }
     }
     .hide {
       grid-area: button;
     }
-
-    &.hidden .show span {
-      transform: translateX(0);
-    }
   }
 }
+

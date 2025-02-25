@@ -1,5 +1,9 @@
-import { useEffect } from 'react'
-import { Color } from '../color'
+import { clsx } from 'clsx'
+import { AnimatePresence } from 'motion/react'
+import { useEffect, useState } from 'react'
+import { Color } from '~/components/color'
+import { Background } from '~/components/background'
+import { Blur } from '~/components/blur'
 import { useStore } from '~/hooks/use-store'
 import {
   getHexCode,
@@ -11,40 +15,44 @@ import {
 import s from './palette.module.scss'
 
 export const Palette = () => {
-  // const paletteList = [
-  //   { name: 'Electric Blue', code: '#dbd834' },
-  //   { name: 'Deep Plum', code: '#e7ff97' },
-  //   { name: 'Bright Coral', code: '#e84855' },
-  //   { name: 'Light Cream', code: '#ff5700' },
-  //   { name: 'Vibrant Orange', code: '#2b3a67' },
-  // ]
+  const response = useStore((state) => state.response)
+  //const loading = useStore((state) => state.loading)
 
-  const paletteList = [
+  const [paletteChange, setPaletteChange] = useState(false)
+  const [paletteList, setPaletteList] = useState([
     { code: randomHexColor() },
     { code: randomHexColor() },
     { code: randomHexColor() },
     { code: randomHexColor() },
     { code: randomHexColor() },
-  ]
-
-  // const { response, loading } = useStore();
-
-  // return (
-  //   <div>
-  //     {loading && <p>Loading...</p>}
-  //     {!loading && response && <p>Response: {response}</p>}
-  //   </div>
-  // );
+  ])
 
   // Processing palette
-  const processedPalette = paletteList.map((color) => {
+  const processedPalette = paletteList.map((color, index) => {
     const hex = getHexCode(color.code)
     const rgb = hexToRGB(hex)
     const isDark = isDarkColor(rgb)
 
-    return { ...color, hex, rgb, isDark }
+    return { ...color, hex, rgb, isDark, index: index }
   })
 
+  // Update paletteList when response changes
+  useEffect(() => {
+    if (!response) return
+
+    setPaletteList(response) // Update paletteList with response value
+    setPaletteChange(true)
+
+    const paletteTimeout = setTimeout(() => {
+      setPaletteChange(false)
+    }, 500)
+
+    return () => {
+      clearTimeout(paletteTimeout)
+    }
+  }, [response])
+
+  // Update the UI with values from colors
   const setFirstColumnLight = useStore((state) => state.setFirstColumnLight)
   const setLastColumnLight = useStore((state) => state.setLastColumnLight)
 
@@ -57,10 +65,31 @@ export const Palette = () => {
   }, [processedPalette, setFirstColumnLight, setLastColumnLight])
 
   return (
-    <div className={s.palette}>
-      {processedPalette.map((color, i) => {
-        return <Color props={color} key={i} />
-      })}
+    <div className={s.grid}>
+      <div className={clsx(s.palette, s.stack, s.names)}>
+        {processedPalette.map((color, i) => {
+          return <Color props={color} key={i} />
+        })}
+      </div>
+
+      <div className={clsx(s.stack, s.colors)}>
+        <Blur>
+          <div className={s.palette}>
+            <AnimatePresence>
+              {!paletteChange &&
+                processedPalette.map((color, i) => {
+                  return (
+                    <Background
+                      props={color}
+                      key={`${i}${color.hex}${color.index}`}
+                    />
+                  )
+                })}
+            </AnimatePresence>
+          </div>
+        </Blur>
+      </div>
     </div>
   )
 }
+

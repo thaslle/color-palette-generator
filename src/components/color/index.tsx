@@ -4,10 +4,17 @@ import { SplitText } from '../split-text'
 import { useStore } from '~/hooks/use-store'
 
 import s from './color.module.scss'
+import { useEffect, useState } from 'react'
 
 export const Color = ({ props }: { props: ColorProps }) => {
   const showControls = useStore((state) => state.showControls)
+  const loading = useStore((state) => state.loading)
   const setHint = useStore((state) => state.setHint)
+
+  const [reverse, setReverse] = useState(!showControls || loading)
+  useEffect(() => {
+    setReverse(!showControls || loading)
+  }, [showControls, loading])
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard
@@ -30,12 +37,12 @@ export const Color = ({ props }: { props: ColorProps }) => {
           style={{ pointerEvents: showControls ? 'visible' : 'none' }}
         >
           <h2 className={s.title}>
-            <SplitText reverse={!showControls} delay={1.2}>
+            <SplitText reverse={reverse} delay={loading ? 0.1 : 1.2}>
               {props.hex}
             </SplitText>
           </h2>
           <div className={s.description}>
-            <SplitText reverse={!showControls} delay={1.4}>
+            <SplitText reverse={reverse} delay={loading ? 0.1 : 1.4}>
               {props.name}
             </SplitText>
           </div>

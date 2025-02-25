@@ -53,7 +53,7 @@ export async function getGroqChatCompletion(
         { name: 'Vibrant Orange', code: '#2b3a67' },
       ]
 
-  await delayExecution(0.5)
+  await delayExecution(1)
 
   return fullPalette
 }

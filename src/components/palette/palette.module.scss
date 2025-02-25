@@ -1,14 +1,18 @@
 .grid {
-  display: grid;
+  display: flex;
   width: 100vw;
   height: 100vh;
-  grid-template-areas: 'stack';
+  position: absolute;
 
   .stack {
-    grid-area: stack;
-    position: relative;
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    top: 0;
+    left: 0;
     display: grid;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 
     &.names {
       z-index: 2;
@@ -21,7 +25,8 @@
   .palette {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
   }
 }
 

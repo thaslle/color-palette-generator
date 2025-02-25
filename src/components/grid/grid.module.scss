@@ -9,6 +9,14 @@
     grid-area: full;
     z-index: 1;
   }
+  .slider {
+    position: relative;
+    grid-area: full;
+    z-index: 2;
+    display: grid;
+    align-items: start;
+    pointer-events: none;
+  }
   .nav {
     position: relative;
     grid-area: full;
@@ -18,3 +26,4 @@
     pointer-events: none;
   }
 }
+

@@ -16,9 +16,8 @@ import s from './palette.module.scss'
 
 export const Palette = () => {
   const response = useStore((state) => state.response)
-  //const loading = useStore((state) => state.loading)
+  const loading = useStore((state) => state.loading)
 
-  const [paletteChange, setPaletteChange] = useState(false)
   const [paletteList, setPaletteList] = useState([
     { code: randomHexColor() },
     { code: randomHexColor() },
@@ -39,17 +38,7 @@ export const Palette = () => {
   // Update paletteList when response changes
   useEffect(() => {
     if (!response) return
-
     setPaletteList(response) // Update paletteList with response value
-    setPaletteChange(true)
-
-    const paletteTimeout = setTimeout(() => {
-      setPaletteChange(false)
-    }, 500)
-
-    return () => {
-      clearTimeout(paletteTimeout)
-    }
   }, [response])
 
   // Update the UI with values from colors
@@ -75,8 +64,8 @@ export const Palette = () => {
       <div className={clsx(s.stack, s.colors)}>
         <Blur>
           <div className={s.palette}>
-            <AnimatePresence>
-              {!paletteChange &&
+            <AnimatePresence mode="wait">
+              {!loading &&
                 processedPalette.map((color, i) => {
                   return (
                     <Background

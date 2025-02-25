@@ -11,6 +11,7 @@ type Store = {
   firstColumnLight: boolean
   lastColumnLight: boolean
   hint: Hint
+  motionBlur: number
   blur: number
   setShowControls: () => void
   setFirstColumnLight: (isLight: boolean) => void
@@ -20,8 +21,10 @@ type Store = {
 
   // API
   response: string | any
+  splashScreen: boolean
   loading: boolean
   setResponse: (response: string | any) => void
+  setSplashScreen: (splashScreen: boolean) => void
   setLoading: (loading: boolean) => void
 }
 
@@ -31,6 +34,7 @@ export const useStore = create<Store>((set) => ({
   firstColumnLight: false,
   lastColumnLight: false,
   hint: { time: null, message: null },
+  motionBlur: 250,
   blur: 0,
   setShowControls: () =>
     set((state) => ({ showControls: !state.showControls })),
@@ -38,12 +42,15 @@ export const useStore = create<Store>((set) => ({
   setLastColumnLight: (isLight) => set(() => ({ lastColumnLight: isLight })),
   setHint: (message) =>
     set(() => ({ hint: { time: Date.now(), message: message } })),
-  setBlur: (blur) => set(() => ({ blur: blur })),
+  setBlur: (blur) => set({ blur }),
 
   // API
   response: '',
+  splashScreen: true,
   loading: false,
+
   setResponse: (response) => set({ response }),
+  setSplashScreen: (splashScreen) => set({ splashScreen }),
   setLoading: (loading) => set({ loading }),
 }))
 

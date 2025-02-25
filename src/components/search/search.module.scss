@@ -7,13 +7,6 @@
     display: flex;
     justify-content: center;
 
-    opacity: 0;
-    transform: translateY(5%) scale(0.98);
-    filter: blur(0.25rem);
-
-    animation: var(--transition-duration) var(--transition-easing) 1.2s forwards
-      1 normal searchShow;
-
     .form {
       position: relative;
       display: grid;
@@ -25,7 +18,7 @@
       width: 100%;
       max-width: 420px;
 
-      box-shadow: 0 0 1.5rem 0px rgba(0, 0, 0, 0.05);
+      //box-shadow: 0 0 1.5rem 0px rgba(0, 0, 0, 0.05);
 
       &::before {
         content: '';

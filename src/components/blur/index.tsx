@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, ReactNode } from 'react'
+import React, { ReactNode, useEffect, useRef } from 'react'
+import { useStore } from '~/hooks/use-store'
 import s from './blur.module.scss'
 
 type BlurProps = {
@@ -6,31 +7,53 @@ type BlurProps = {
 }
 
 export const Blur: React.FC<BlurProps> = ({ children }) => {
-  //const [startAnimation, setStartAnimation] = useState(false);
-  const animateRef = useRef<SVGAnimateElement | null>(null)
+  const motionBlur = useStore((state) => state.motionBlur)
+  const blur = useStore((state) => state.blur)
+  const loading = useStore((state) => state.loading)
+  const splashScreen = useStore((state) => state.splashScreen)
+  const setSplashScreen = useStore((state) => state.setSplashScreen)
 
-  //   useEffect(() => {
-  //     if (startAnimation && animateRef.current) {
-  //       animateRef.current.beginElement();
-  //     }
-  //   }, [startAnimation]);
+  const animateRef = useRef<SVGAnimateElement | null>(null)
 
   useEffect(() => {
     if (!animateRef.current) return
-    //animateRef.current.beginElement()
-  }, [])
+
+    if (!loading && !splashScreen) {
+      // Play animation
+      animateRef.current.setAttribute('values', `${motionBlur}; ${blur}`)
+      animateRef.current.setAttribute('duration', '3s')
+      animateRef.current.beginElement()
+    }
+
+    if (loading && splashScreen) setSplashScreen(false)
+  }, [loading])
+
+  useEffect(() => {
+    if (!animateRef.current) return
+
+    if (!loading && !splashScreen) {
+      // Play animation
+      animateRef.current.setAttribute('values', `${blur}; ${blur}`)
+      animateRef.current.setAttribute('duration', '0s')
+      animateRef.current.endElement()
+    }
+  }, [blur])
 
   return (
     <>
       <svg className={s.svg}>
-        <filter id="blur-filter">
-          <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="250">
+        <filter id="blur-filter" colorInterpolationFilters="sRGB">
+          <feGaussianBlur
+            in="SourceGraphic"
+            result="blur"
+            stdDeviation={motionBlur}
+          >
             <animate
               ref={animateRef}
               id="blur-animation"
               attributeName="stdDeviation"
-              values="150; 0"
-              dur="1s"
+              values={`${motionBlur}; ${blur}`}
+              dur="3s"
               repeatCount="1"
               begin="indefinite"
               fill="freeze"
@@ -45,7 +68,6 @@ export const Blur: React.FC<BlurProps> = ({ children }) => {
         </filter>
       </svg>
 
-      {/* Target element */}
       <div
         className={s.filter}
         style={{

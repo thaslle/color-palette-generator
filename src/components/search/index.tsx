@@ -12,6 +12,7 @@ import s from './search.module.scss'
 export const Search = () => {
   const showControls = useStore((state) => state.showControls)
   const setResponse = useStore((state) => state.setResponse)
+  const setSplashScreen = useStore((state) => state.setSplashScreen)
   const setLoading = useStore((state) => state.setLoading)
 
   const [searchQuery, setSearchQuery] = useState('')
@@ -29,6 +30,7 @@ export const Search = () => {
       )
       //setResponse(chatCompletion.choices[0]?.message?.content || 'No response')
       setResponse(chatCompletion)
+      setSplashScreen(false)
       setSearchQuery('')
     } catch (error) {
       console.error('Error fetching chat completion:', error)

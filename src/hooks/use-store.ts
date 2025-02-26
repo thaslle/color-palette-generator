@@ -1,4 +1,6 @@
 import { create } from 'zustand'
+import { formatPalette, randomHexColor } from '~/utils/color'
+import { ColorProps } from '~/utils/types'
 
 type Hint = {
   time: number | null
@@ -23,6 +25,7 @@ type Store = {
   response: string | any
   splashScreen: boolean
   loading: boolean
+  palette: ColorProps[]
   setResponse: (response: string | any) => void
   setSplashScreen: (splashScreen: boolean) => void
   setLoading: (loading: boolean) => void
@@ -49,7 +52,24 @@ export const useStore = create<Store>((set) => ({
   splashScreen: true,
   loading: false,
 
-  setResponse: (response) => set({ response }),
+  // Create a new palette
+  palette: formatPalette(
+    Array.from({ length: 5 }, (_, index) => {
+      const randColor = randomHexColor()
+      return { code: randColor, index }
+    }),
+  ),
+
+  //setResponse: (response) => set({ response }),
+  setResponse: (response) => {
+    set(() => {
+      const palette = formatPalette(response)
+      return {
+        response: response,
+        palette: palette,
+      }
+    })
+  },
   setSplashScreen: (splashScreen) => set({ splashScreen }),
   setLoading: (loading) => set({ loading }),
 }))

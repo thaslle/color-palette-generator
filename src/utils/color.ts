@@ -1,4 +1,4 @@
-import { RGB } from './types'
+import { RGB, PaletteProps } from './types'
 
 export const getHexCode = (colorCode: string): string => {
   return colorCode.replace('#', '')
@@ -23,3 +23,15 @@ export const randomHexColor = () => {
     .padStart(6, '0')}`
   return randomColor
 }
+
+// Function to format the palette
+export const formatPalette = (palette: PaletteProps[]) => {
+  return palette.map((color, index) => {
+    const hex = getHexCode(color.code)
+    const rgb = hexToRGB(hex)
+    const isDark = isDarkColor(rgb)
+
+    return { ...color, hex, rgb, isDark, index }
+  })
+}
+

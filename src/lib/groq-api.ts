@@ -1,5 +1,7 @@
 // import Groq from 'groq-sdk'
 
+import { randomHexColor } from '~/utils/color'
+
 // const groq = new Groq({
 //   apiKey: import.meta.env.VITE_GROQ_API_KEY,
 //   dangerouslyAllowBrowser: true, // Remove this later
@@ -45,12 +47,19 @@ export async function getGroqChatCompletion(
         { name: 'Curry Dark', code: '#6E4E2D' },
         { name: 'Curry Deep', code: '#3F2C14' },
       ]
-    : [
+    : /*[
         { name: 'Electric Blue', code: '#dbd834' },
         { name: 'Deep Plum', code: '#e7ff97' },
         { name: 'Bright Coral', code: '#e84855' },
         { name: 'Light Cream', code: '#ff5700' },
         { name: 'Vibrant Orange', code: '#2b3a67' },
+      ]*/
+      [
+        { name: 'Electric Blue', code: randomHexColor() },
+        { name: 'Deep Plum', code: randomHexColor() },
+        { name: 'Bright Coral', code: randomHexColor() },
+        { name: 'Light Cream', code: randomHexColor() },
+        { name: 'Vibrant Orange', code: randomHexColor() },
       ]
 
   await delayExecution(1)
@@ -62,7 +71,7 @@ const delayExecution = (seconds: number) => {
   return new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve()
-    }, seconds * 1000) // Convert seconds to milliseconds
+    }, seconds * 500) // Convert seconds to milliseconds
   })
 }
 

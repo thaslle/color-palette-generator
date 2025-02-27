@@ -33,5 +33,9 @@
       grid-area: button;
     }
   }
+
+  @media only screen and (max-width: 767px) {
+    display: none;
+  }
 }
 

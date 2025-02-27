@@ -2,6 +2,7 @@
 
 varying vec2 vUv;
 
+uniform int uIsMobile;
 uniform float uBlurProgress;
 uniform float uColorProgress;
 uniform float uUserBlur;
@@ -31,11 +32,35 @@ void main() {
     float radius = mix(userBlur, motionBlur, uBlurProgress);
 
     // Smooth transitions for each stripe using smoothstep
-    float stripe1 = smoothstep(stripeWidth * 1.0 - radius, stripeWidth * 1.0 + radius, vUv.x);
-    float stripe2 = smoothstep(stripeWidth * 2.0 - radius, stripeWidth * 2.0 + radius, vUv.x);
-    float stripe3 = smoothstep(stripeWidth * 3.0 - radius, stripeWidth * 3.0 + radius, vUv.x);
-    float stripe4 = smoothstep(stripeWidth * 4.0 - radius, stripeWidth * 4.0 + radius, vUv.x);
-    float stripe5 = smoothstep(stripeWidth * 5.0 - radius, stripeWidth * 5.0 + radius, vUv.x);
+    float stripe1, stripe2, stripe3, stripe4, stripe5;
+
+    if(uIsMobile == 1) {
+        
+        // Define your heights for each stripe as fractions of the total height
+        float sh1 = 0.175;
+        float sh2 = 0.35;
+        float sh3 = 0.525;
+        float sh4 = 0.70;
+        float sh5 = 1.0;
+        
+        stripe1 = smoothstep(sh1 - radius, sh1 + radius, 1.0-vUv.y);
+        stripe2 = smoothstep(sh2 - radius, sh2 + radius, 1.0-vUv.y);
+        stripe3 = smoothstep(sh3 - radius, sh3 + radius, 1.0-vUv.y);
+        stripe4 = smoothstep(sh4 - radius, sh4 + radius, 1.0-vUv.y);
+        stripe5 = smoothstep(sh5 - radius, sh5 + radius, 1.0-vUv.y);
+
+    } else {
+        
+        // Desktop: Use vUv.x as threshold
+        stripe1 = smoothstep(stripeWidth * 1.0 - radius, stripeWidth * 1.0 + radius, vUv.x);
+        stripe2 = smoothstep(stripeWidth * 2.0 - radius, stripeWidth * 2.0 + radius, vUv.x);
+        stripe3 = smoothstep(stripeWidth * 3.0 - radius, stripeWidth * 3.0 + radius, vUv.x);
+        stripe4 = smoothstep(stripeWidth * 4.0 - radius, stripeWidth * 4.0 + radius, vUv.x);
+        stripe5 = smoothstep(stripeWidth * 5.0 - radius, stripeWidth * 5.0 + radius, vUv.x);
+
+    }   
+
+
 
     // Interpolate the colors based on smoothstep results
     shadeColor = mix(uColor1, uColor2, stripe1);

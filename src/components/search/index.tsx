@@ -7,6 +7,7 @@ import { Submit } from './submit'
 import { useStore } from '~/hooks/use-store'
 import { getGroqChatCompletion } from '~/lib/groq-api'
 import { isColorPropsArray } from '~/utils/color'
+import { settings } from '~/config/settings'
 
 import s from './search.module.scss'
 
@@ -24,15 +25,16 @@ export const Search = () => {
     e.preventDefault()
     setLoading(true)
 
+    // Using fake API for tests
     try {
       // Get Groq completion using form values
       const chatCompletion = await getGroqChatCompletion(
         searchQuery,
         isMonochromatic,
+        settings.test, // Test true
       )
-      const content = chatCompletion.choices[0]?.message?.content
 
-      console.log(content)
+      const content = chatCompletion.choices[0]?.message?.content
 
       // Ensure content is a string, return early if it's not
       if (typeof content !== 'string') {

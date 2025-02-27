@@ -1,15 +1,16 @@
 .controls {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
-  padding: 0 0 2rem 0;
   pointer-events: visible;
 
-  &.firstColumnLight {
-    --first-column-color: var(--color-light);
+  @media only screen and (min-width: 767px) {
+    grid-template-columns: 1fr 3fr 1fr;
+    padding: 0 0 2rem 0;
   }
 
-  &.lastColumnLight {
-    --last-column-color: var(--color-light);
+  @media only screen and (max-width: 767px) {
+    padding: 0 1rem 2rem 1rem;
+    gap: 1rem;
   }
 }
+

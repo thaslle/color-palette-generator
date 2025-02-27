@@ -6,6 +6,7 @@ import CustomShaderMaterial from 'three-custom-shader-material'
 
 import { ColorGroupProps } from '~/utils/types'
 import { useStore } from '~/hooks/use-store'
+import { useIsMobile } from '~/hooks/use-mobile'
 
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
@@ -18,6 +19,7 @@ export const Experience = () => {
   const motionBlur = useStore((state) => state.motionBlur)
   const loading = useStore((state) => state.loading)
   const splashScreen = useStore((state) => state.splashScreen)
+  const isMobile = useIsMobile()
 
   const [blurTarget, setBlurTarget] = useState(1)
   const [colorTarget, setColorTarget] = useState(0)
@@ -31,6 +33,7 @@ export const Experience = () => {
   // Set uniforms
   const uniforms = useMemo(
     () => ({
+      uIsMobile: { value: isMobile ? 1 : 0 },
       uBlurProgress: { value: 0 },
       uColorProgress: { value: 0 },
       uMotionBlur: { value: motionBlur },
@@ -48,6 +51,12 @@ export const Experience = () => {
     }),
     [],
   )
+
+  // When isMobile Changes
+  useEffect(() => {
+    if (!materialRef.current) return
+    materialRef.current.uniforms.uIsMobile.value = isMobile ? 1 : 0
+  }, [isMobile])
 
   // Set a new blur value
   useEffect(() => {

@@ -1,6 +1,5 @@
 import Groq from 'groq-sdk'
-
-//import { randomHexColor } from '~/utils/color'
+import { randomHexColor } from '~/utils/color'
 
 const groq = new Groq({
   apiKey: import.meta.env.VITE_GROQ_API_KEY,
@@ -10,7 +9,39 @@ const groq = new Groq({
 export async function getGroqChatCompletion(
   query: string,
   monochrome: boolean,
+  test: boolean,
 ) {
+  // Fake api
+  if (test) {
+    const palette = monochrome
+      ? [
+          { name: 'Curry Light', code: '#E6D8B9' },
+          { name: 'Curry Soft', code: '#C9B08A' },
+          { name: 'Curry Medium', code: '#A58C5B' },
+          { name: 'Curry Dark', code: '#6E4E2D' },
+          { name: 'Curry Deep', code: '#3F2C14' },
+        ]
+      : [
+          { name: 'Electric Blue', code: randomHexColor() },
+          { name: 'Deep Plum', code: randomHexColor() },
+          { name: 'Bright Coral', code: randomHexColor() },
+          { name: 'Light Cream', code: randomHexColor() },
+          { name: 'Vibrant Orange', code: randomHexColor() },
+        ]
+
+    await delayExecution(1)
+
+    return {
+      choices: [
+        {
+          message: {
+            content: JSON.stringify(palette),
+          },
+        },
+      ],
+    }
+  }
+
   const prompt = monochrome
     ? `Generate a monochromatic color palette with 5 shades based on "${query}", optimized for UI design.
     The palette must include both light and dark shades for contrast, with at least one dark shade and one light shade.
@@ -33,44 +64,11 @@ export async function getGroqChatCompletion(
   })
 }
 
-// Fake api
-// export async function getGroqChatCompletion(
-//   query: string,
-//   monochrome: boolean,
-// ) {
-//   if (!query) return
-
-//   const fullPalette = monochrome
-//     ? [
-//         { name: 'Curry Light', code: '#E6D8B9' },
-//         { name: 'Curry Soft', code: '#C9B08A' },
-//         { name: 'Curry Medium', code: '#A58C5B' },
-//         { name: 'Curry Dark', code: '#6E4E2D' },
-//         { name: 'Curry Deep', code: '#3F2C14' },
-//       ]
-//     : [
-//         { name: 'Electric Blue', code: randomHexColor() },
-//         { name: 'Deep Plum', code: randomHexColor() },
-//         { name: 'Bright Coral', code: randomHexColor() },
-//         { name: 'Light Cream', code: randomHexColor() },
-//         { name: 'Vibrant Orange', code: randomHexColor() },
-//       ]
-
-//   await delayExecution(1)
-//   const response = {
-//     name: 'Random palette',
-//     date: Date.now(),
-//     colors: fullPalette,
-//   }
-
-//   return response
-// }
-
-// const delayExecution = (seconds: number) => {
-//   return new Promise<void>((resolve) => {
-//     setTimeout(() => {
-//       resolve()
-//     }, seconds * 500) // Convert seconds to milliseconds
-//   })
-// }
+const delayExecution = (seconds: number) => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, seconds * 500) // Convert seconds to milliseconds
+  })
+}
 

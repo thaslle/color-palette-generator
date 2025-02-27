@@ -19,6 +19,12 @@
     display: grid;
     align-items: start;
     pointer-events: none;
+
+    @media only screen and (max-width: 767px) {
+      align-items: center;
+      pointer-events: none;
+      justify-items: end;
+    }
   }
   .nav {
     position: relative;

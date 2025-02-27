@@ -1,7 +1,7 @@
 .textSplitted {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: flex-start;
   column-gap: 0.3ch;
   position: relative;
@@ -27,6 +27,11 @@
         height: 1.5em;
       }
     }
+  }
+
+  @media only screen and (max-width: 767px) {
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
 }
 

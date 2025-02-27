@@ -6,6 +6,7 @@ import { Submit } from './submit'
 
 import { useStore } from '~/hooks/use-store'
 import { getGroqChatCompletion } from '~/lib/groq-api'
+import { isColorPropsArray } from '~/utils/color'
 
 import s from './search.module.scss'
 
@@ -14,6 +15,7 @@ export const Search = () => {
   const setResponse = useStore((state) => state.setResponse)
   const setSplashScreen = useStore((state) => state.setSplashScreen)
   const setLoading = useStore((state) => state.setLoading)
+  const setCaret = useStore((state) => state.setCaret)
 
   const [searchQuery, setSearchQuery] = useState('')
   const [isMonochromatic, setIsMonochromatic] = useState(false)
@@ -28,13 +30,44 @@ export const Search = () => {
         searchQuery,
         isMonochromatic,
       )
-      //setResponse(chatCompletion.choices[0]?.message?.content || 'No response')
-      setResponse(chatCompletion)
+      const content = chatCompletion.choices[0]?.message?.content
+
+      console.log(content)
+
+      // Ensure content is a string, return early if it's not
+      if (typeof content !== 'string') {
+        console.log('Content is already an object or not a string:', content)
+        return
+      }
+
+      // Try parsing the content
+      let parsedContent
+      try {
+        parsedContent = JSON.parse(content)
+      } catch (error) {
+        console.error('Error parsing JSON:', error)
+        return
+      }
+
+      // Check if the parsed content is a valid array
+      if (!isColorPropsArray(parsedContent)) {
+        console.error('Wrong array type')
+        return
+      }
+
+      // Create the response object and update the state
+      const response = {
+        name: searchQuery,
+        date: Date.now(),
+        colors: parsedContent,
+      }
+
+      setResponse(response)
       setSplashScreen(false)
       setSearchQuery('')
+      setCaret({ show: false, x: 0 })
     } catch (error) {
       console.error('Error fetching chat completion:', error)
-      //setResponse('An error occurred while fetching the response.')
     } finally {
       setLoading(false)
     }

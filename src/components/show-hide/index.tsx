@@ -6,10 +6,13 @@ import { useStore } from '~/hooks/use-store'
 import s from './show-hide.module.scss'
 
 export const ShowHide = () => {
-  const { showControls, setShowControls } = useStore()
+  const showControls = useStore((state) => state.showControls)
+  const setShowControls = useStore((state) => state.setShowControls)
+  const colors = useStore((state) => state.palette.colors)
+  const isDark = colors[4].isDark
 
   return (
-    <div className={s.showhide}>
+    <div className={clsx(s.showhide, { [s.dark]: isDark })}>
       <button
         className={clsx(s.button, { [s.hidden]: !showControls })}
         onClick={() => setShowControls()}

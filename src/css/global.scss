@@ -24,9 +24,6 @@
   --transition-text-duration: 0.8s;
   --transition-easing: ease-in-out;
   --transition-elastic: cubic-bezier(0.075, 0.82, 0.165, 1);
-
-  --fisrt-column-color: var(--color-dark);
-  --last-column-color: var(--color-dark);
 }
 
 @supports (font-variation-settings: normal) {

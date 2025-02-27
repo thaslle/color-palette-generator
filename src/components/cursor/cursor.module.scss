@@ -7,10 +7,6 @@
   pointer-events: none;
   z-index: 1000;
 
-  //   &:not(.label) {
-  //     mix-blend-mode: difference;
-  //   }
-
   .pointer {
     position: absolute;
     top: 0;
@@ -100,3 +96,4 @@
     display: none;
   }
 }
+

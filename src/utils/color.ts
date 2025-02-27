@@ -1,4 +1,4 @@
-import { RGB, PaletteProps } from './types'
+import { RGB, FormatPaletteProps, ColorProps } from './types'
 
 export const getHexCode = (colorCode: string): string => {
   return colorCode.replace('#', '')
@@ -25,13 +25,32 @@ export const randomHexColor = () => {
 }
 
 // Function to format the palette
-export const formatPalette = (palette: PaletteProps[]) => {
-  return palette.map((color, index) => {
+export const formatPalette = (palette: FormatPaletteProps) => {
+  const formattedColors = palette.colors.map((color, index) => {
     const hex = getHexCode(color.code)
     const rgb = hexToRGB(hex)
     const isDark = isDarkColor(rgb)
 
     return { ...color, hex, rgb, isDark, index }
   })
+
+  return {
+    name: palette.name || '',
+    date: palette.date,
+    colors: formattedColors,
+  }
+}
+
+export const isColorPropsArray = (array: any): array is ColorProps[] => {
+  return (
+    Array.isArray(array) &&
+    array.every(
+      (item) =>
+        item &&
+        typeof item.code === 'string' && // 'code' is required to be a string
+        (item.name === undefined || typeof item.name === 'string') && // 'name' is optional and if exists, must be a string
+        (item.index === undefined || typeof item.index === 'number'), // 'index' is optional and if exists, must be a number
+    )
+  )
 }
 

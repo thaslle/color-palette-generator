@@ -1,20 +1,21 @@
 import { clsx } from 'clsx'
-import { ColorProps } from '~/utils/types'
+import { ColorGroupProps } from '~/utils/types'
 import { SplitText } from '../split-text'
 import { useStore } from '~/hooks/use-store'
 
 import s from './color.module.scss'
 import { useEffect, useState } from 'react'
 
-export const Color = ({ props }: { props: ColorProps }) => {
+export const Color = ({ props }: { props: ColorGroupProps }) => {
   const showControls = useStore((state) => state.showControls)
+  const blur = useStore((state) => state.blur)
   const loading = useStore((state) => state.loading)
   const setHint = useStore((state) => state.setHint)
 
   const [reverse, setReverse] = useState(!showControls || loading)
   useEffect(() => {
-    setReverse(!showControls || loading)
-  }, [showControls, loading])
+    setReverse(!showControls || loading || blur > 80)
+  }, [showControls, loading, blur])
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard

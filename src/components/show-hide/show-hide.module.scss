@@ -2,7 +2,11 @@
   padding-inline: 1rem;
   display: flex;
   justify-content: flex-end;
-  color: var(--last-column-color);
+  color: var(--color-dark);
+
+  &.dark {
+    color: var(--color-light);
+  }
 
   .button {
     all: unset;

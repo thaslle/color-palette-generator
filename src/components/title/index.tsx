@@ -12,7 +12,7 @@ export const Title = () => {
 
   const isDark = isMobile ? colors[4].isDark : colors[0].isDark
 
-  const showTitle = name ? `${name} ↗` : `Start here ${isMobile ? '↓' : '→'}`
+  const showTitle = name ? `${name} ↗` : `Start typing ${isMobile ? '↓' : '→'}`
   return (
     <div className={clsx(s.title, { [s.dark]: isDark })}>
       <SplitText key={date} reverse={!showControls}>

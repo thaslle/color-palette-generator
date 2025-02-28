@@ -49,7 +49,7 @@ export async function getGroqChatCompletion(
     Ensure the colors are harmonious and usable in a UI context.
     The response MUST BE ONLY a JSON array in the following format: [{ "name": "Color Name", "code": "#HexCode" }, ...]' }`
     : `Generate a color palette with 5 colors inspired by "${query}", optimized for UI design.
-    The palette must include both light and dark shades for contrast, with at least one vibrant color, one dark shade and one light shade.
+    The palette must include both light and dark shades for contrast, with at least one vibrant color. Try to avoid desaturated grays.
     Ensure the colors are harmonious and usable in a UI context but not monochromatic.
     The response MUST BE ONLY a JSON array in the following format: [{ "name": "Color Name", "code": "#HexCode" }, ...]`
 

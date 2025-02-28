@@ -22,7 +22,7 @@ export const Response: React.FC<ResponseProps> = ({
   useEffect(() => {
     if ((start || error) && timeoutRef.current) clearTimeout(timeoutRef.current)
 
-    if (start) setShowLoader(true)
+    if (start && Date.now() - start <= 500) setShowLoader(true)
     if (error) setShowError(true)
 
     timeoutRef.current = setTimeout(() => {
@@ -82,3 +82,4 @@ export const Response: React.FC<ResponseProps> = ({
     </AnimatePresence>
   )
 }
+

@@ -15,14 +15,10 @@ type Loading = {
 type Store = {
   // UI
   showControls: boolean
-  firstColumnLight: boolean
-  lastColumnLight: boolean
   hint: Hint
   motionBlur: number
   blur: number
   setShowControls: () => void
-  setFirstColumnLight: (isLight: boolean) => void
-  setLastColumnLight: (isLight: boolean) => void
   setHint: (message: string) => void
   setBlur: (blur: number) => void
 
@@ -39,16 +35,12 @@ type Store = {
 export const useStore = create<Store>((set) => ({
   // UI
   showControls: true,
-  firstColumnLight: false,
-  lastColumnLight: false,
   hint: { time: null, message: null },
   motionBlur: 250,
   blur: 0,
   submit: false,
   setShowControls: () =>
     set((state) => ({ showControls: !state.showControls })),
-  setFirstColumnLight: (isLight) => set(() => ({ firstColumnLight: isLight })),
-  setLastColumnLight: (isLight) => set(() => ({ lastColumnLight: isLight })),
   setHint: (message) =>
     set(() => ({ hint: { time: Date.now(), message: message } })),
   setBlur: (blur) => set({ blur }),

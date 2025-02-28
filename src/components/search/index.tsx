@@ -25,7 +25,7 @@ export const Search = () => {
   const setSplashScreen = useStore((state) => state.setSplashScreen)
   const setLoading = useStore((state) => state.setLoading)
 
-  const placeholder = 'What’s the mood today?'
+  const placeholder = 'What’s your mood today?'
 
   const [searchQuery, setSearchQuery] = useState('')
   const [lastSubmit, setLastSubmit] = useState('')
@@ -77,7 +77,11 @@ export const Search = () => {
 
     const fSearchQuery = searchQuery.toLowerCase()
 
-    if (fSearchQuery === 'random' || fSearchQuery === 'surprise') {
+    // List of words to check against
+    const surpriseWords = ['random', 'surprise', 'surprise me', 'surpriseme']
+
+    // Check if fSearchQuery matches any word in the list
+    if (surpriseWords.includes(fSearchQuery)) {
       surpriseMe()
       return
     }

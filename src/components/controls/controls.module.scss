@@ -9,8 +9,10 @@
   }
 
   @media only screen and (max-width: 767px) {
+    grid-template-columns: auto 2rem;
+    grid-template-areas: 'title hide' 'search search';
     padding: 0 1rem 2rem 1rem;
-    gap: 1rem;
+    row-gap: 1rem;
   }
 }
 

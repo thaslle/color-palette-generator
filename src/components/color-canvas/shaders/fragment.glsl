@@ -5,6 +5,7 @@ varying vec2 vUv;
 uniform int uIsMobile;
 uniform float uBlurProgress;
 uniform float uColorProgress;
+uniform float uControlsProgress;
 uniform float uUserBlur;
 uniform float uMotionBlur;
 uniform vec3 uPrevColor1;
@@ -37,10 +38,10 @@ void main() {
     if(uIsMobile == 1) {
         
         // Define your heights for each stripe as fractions of the total height
-        float sh1 = 0.175;
-        float sh2 = 0.35;
-        float sh3 = 0.525;
-        float sh4 = 0.70;
+        float sh1 = mix(0.2, 0.175, uControlsProgress);
+        float sh2 = mix(0.4, 0.35, uControlsProgress);
+        float sh3 = mix(0.6, 0.525, uControlsProgress);
+        float sh4 = mix(0.8, 0.70, uControlsProgress);
         float sh5 = 1.0;
         
         stripe1 = smoothstep(sh1 - radius, sh1 + radius, 1.0-vUv.y);

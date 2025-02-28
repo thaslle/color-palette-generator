@@ -22,10 +22,15 @@
 
     .show {
       grid-area: button;
+
+      display: grid;
+      grid-template-areas: 'show';
       width: max-content;
+      height: 1.5rem;
       overflow: hidden;
 
       span {
+        grid-area: show;
         display: block;
       }
     }
@@ -35,7 +40,8 @@
   }
 
   @media only screen and (max-width: 767px) {
-    display: none;
+    grid-area: hide;
+    justify-content: flex-start;
   }
 }
 

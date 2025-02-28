@@ -19,10 +19,12 @@ export const Experience = () => {
   const motionBlur = useStore((state) => state.motionBlur)
   const loading = useStore((state) => state.loading)
   const splashScreen = useStore((state) => state.splashScreen)
+  const showControls = useStore((state) => state.showControls)
   const isMobile = useIsMobile()
 
   const [blurTarget, setBlurTarget] = useState(1)
   const [colorTarget, setColorTarget] = useState(0)
+  const [controlsTarget, setControlsTarget] = useState(1)
 
   // Create an array with 5 color objects
   const [prevPalette, setPrevPalette] = useState<ColorGroupProps[]>(palette)
@@ -36,6 +38,7 @@ export const Experience = () => {
       uIsMobile: { value: isMobile ? 1 : 0 },
       uBlurProgress: { value: 0 },
       uColorProgress: { value: 0 },
+      uControlsProgress: { value: 0 },
       uMotionBlur: { value: motionBlur },
       uUserBlur: { value: blur },
       uPrevColor1: { value: new Color('#000000') },
@@ -104,6 +107,12 @@ export const Experience = () => {
     setBlurTarget(loading.state || splashScreen ? 1 : 0)
   }, [loading])
 
+  // Change position when hide controls
+  useEffect(() => {
+    if (!materialRef.current && !isMobile) return
+    setControlsTarget(showControls ? 1 : 0)
+  }, [showControls])
+
   //Update shader time
   useFrame(() => {
     if (!materialRef.current) return
@@ -117,6 +126,12 @@ export const Experience = () => {
     materialRef.current.uniforms.uBlurProgress.value = MathUtils.lerp(
       materialRef.current.uniforms.uBlurProgress.value,
       blurTarget,
+      0.02,
+    )
+
+    materialRef.current.uniforms.uControlsProgress.value = MathUtils.lerp(
+      materialRef.current.uniforms.uControlsProgress.value,
+      controlsTarget,
       0.02,
     )
 

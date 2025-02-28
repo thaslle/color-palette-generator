@@ -1,0 +1,46 @@
+.monochromatic {
+  display: grid;
+  grid-area: monochromatic;
+  grid-template-areas: 'checkbox';
+  place-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2em;
+  cursor: pointer;
+
+  transition: all var(--transition-duration) var(--transition-easing);
+
+  &:hover {
+    background-color: var(--color-highlight);
+  }
+  .checkbox {
+    grid-area: checkbox;
+    visibility: hidden;
+  }
+
+  .icon {
+    pointer-events: none;
+    grid-area: checkbox;
+
+    path {
+      transform-origin: center;
+      transition: all var(--transition-duration) var(--transition-elastic);
+
+      &.mono {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+  }
+
+  &.checked .icon {
+    .color {
+      transform: scale(0);
+      opacity: 0;
+    }
+    .mono {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

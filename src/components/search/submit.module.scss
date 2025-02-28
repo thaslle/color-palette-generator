@@ -1,0 +1,21 @@
+.submit {
+  all: unset;
+  width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  border-radius: 2rem;
+  pointer-events: visible;
+  cursor: pointer;
+
+  transition: background-color var(--transition-duration)
+    var(--transition-easing);
+
+  &:hover {
+    background-color: var(--color-highlight);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.85);
+  }
+}

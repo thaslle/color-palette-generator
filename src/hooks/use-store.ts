@@ -7,9 +7,9 @@ type Hint = {
   message: string | null
 }
 
-type Caret = {
-  show: boolean
-  x: number
+type Loading = {
+  time: number
+  state: boolean
 }
 
 type Store = {
@@ -20,18 +20,16 @@ type Store = {
   hint: Hint
   motionBlur: number
   blur: number
-  caret: Caret
   setShowControls: () => void
   setFirstColumnLight: (isLight: boolean) => void
   setLastColumnLight: (isLight: boolean) => void
   setHint: (message: string) => void
   setBlur: (blur: number) => void
-  setCaret: (caret: Caret) => void
 
   // API
   response: string | any
   splashScreen: boolean
-  loading: boolean
+  loading: Loading
   palette: PaletteProps
   setResponse: (response: string | any) => void
   setSplashScreen: (splashScreen: boolean) => void
@@ -46,7 +44,7 @@ export const useStore = create<Store>((set) => ({
   hint: { time: null, message: null },
   motionBlur: 250,
   blur: 0,
-  caret: { show: false, x: 0 },
+  submit: false,
   setShowControls: () =>
     set((state) => ({ showControls: !state.showControls })),
   setFirstColumnLight: (isLight) => set(() => ({ firstColumnLight: isLight })),
@@ -54,12 +52,11 @@ export const useStore = create<Store>((set) => ({
   setHint: (message) =>
     set(() => ({ hint: { time: Date.now(), message: message } })),
   setBlur: (blur) => set({ blur }),
-  setCaret: (caret) => set({ caret }),
 
   // API
   response: '',
   splashScreen: true,
-  loading: false,
+  loading: { time: Date.now(), state: false },
 
   // Create a new palette
   palette: formatPalette({
@@ -81,6 +78,7 @@ export const useStore = create<Store>((set) => ({
     })
   },
   setSplashScreen: (splashScreen) => set({ splashScreen }),
-  setLoading: (loading) => set({ loading }),
+  setLoading: (loading) =>
+    set({ loading: { time: Date.now(), state: loading } }),
 }))
 

@@ -7,154 +7,66 @@
     display: flex;
     justify-content: center;
 
-    .form {
+    .stack {
       position: relative;
       display: grid;
-      grid-template-columns: auto max-content;
-      align-items: center;
-      border-radius: 3rem;
-      padding: 0.5rem;
+      grid-template-areas: 'stack';
 
       width: 100%;
       max-width: 420px;
 
-      //box-shadow: 0 0 1.5rem 0px rgba(0, 0, 0, 0.05);
-
-      &::before {
-        content: '';
-        display: grid;
-        position: absolute;
-        left: 0;
-        top: 0;
-
-        width: calc(100% + 0.5rem);
-        height: calc(100% + 0.5rem);
-        transform: translate(-0.25rem, -0.25rem);
-
-        background-color: var(--color-material);
-        backdrop-filter: blur(1rem);
-        clip-path: inset(0.25rem round 3rem);
-
-        transition: all var(--transition-duration) var(--transition-easing);
-
-        z-index: -1;
-      }
-
-      &:focus-within::before,
-      &:has(.searchInput:focus)::before {
-        clip-path: inset(0 round 3rem);
-      }
-
-      .searchBar {
-        display: block;
+      .response {
+        grid-area: stack;
         position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+      }
 
-        .searchIcon {
-          display: grid;
-          place-content: center;
-          width: 2rem;
-          height: 2rem;
+      .form {
+        grid-area: stack;
+        position: relative;
+        display: grid;
+        grid-template-areas: 'input monochromatic';
+        grid-template-columns: calc(100% - 2rem) 2rem;
+        align-items: center;
+        border-radius: 3rem;
+        padding: 0.5rem;
+
+        width: 100%;
+        z-index: 1;
+
+        //box-shadow: 0 0 1.5rem 0px rgba(0, 0, 0, 0.05);
+
+        &::before {
+          content: '';
+          display: block;
           position: absolute;
           left: 0;
           top: 0;
-          pointer-events: none;
+
+          width: calc(100% + 0.5rem);
+          height: calc(100% + 0.5rem);
+          transform: translate(-0.25rem, -0.25rem);
+
+          background-color: var(--color-material);
+          backdrop-filter: blur(1rem);
+          clip-path: inset(0.25rem round 3rem);
+
+          transition: all var(--transition-duration) var(--transition-easing);
+          z-index: -1;
         }
 
-        .searchInput {
-          all: unset;
-          width: 100%;
-          height: 2rem;
-          padding-inline: 2rem 1.5rem;
-          line-height: 2rem;
-          box-sizing: border-box;
-
-          &::placeholder {
-            color: var(--color-dark);
-            opacity: 0.8;
-          }
-          &::-webkit-search-cancel-button {
-            -webkit-appearance: none;
-            appearance: none;
-            display: none;
-          }
+        &:focus-within::before,
+        &:has(.searchInput:focus)::before {
+          clip-path: inset(0 round 3rem);
         }
       }
 
-      .monochromatic {
-        display: grid;
-        grid-template-areas: 'checkbox';
-        place-content: center;
-        width: 2rem;
-        height: 2rem;
-        border-radius: 2em;
-        cursor: pointer;
-
-        transition: all var(--transition-duration) var(--transition-easing);
-
-        &:hover {
-          background-color: var(--color-highlight);
-        }
-        .checkbox {
-          grid-area: checkbox;
-          visibility: hidden;
-        }
-
-        .icon {
-          pointer-events: none;
-          grid-area: checkbox;
-
-          path {
-            transform-origin: center;
-            transition: all var(--transition-duration) var(--transition-elastic);
-
-            &.mono {
-              transform: scale(0);
-              opacity: 0;
-            }
-          }
-        }
-
-        &.checked .icon {
-          .color {
-            transform: scale(0);
-            opacity: 0;
-          }
-          .mono {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
+      .icon path {
+        fill: var(--color-icons);
       }
-
-      .submit {
-        all: unset;
-        width: 1.5rem;
-        height: 1.5rem;
-        line-height: 1.5rem;
-        text-align: center;
-
-        position: absolute;
-        top: 0.8rem;
-        left: 0;
-
-        border-radius: 2rem;
-        cursor: pointer;
-
-        transition: background-color var(--transition-duration)
-          var(--transition-easing);
-
-        &:hover {
-          background-color: var(--color-highlight);
-        }
-
-        &:active {
-          transform: translateY(-50%) scale(0.85);
-        }
-      }
-    }
-
-    .icon path {
-      fill: var(--color-icons);
     }
   }
 }

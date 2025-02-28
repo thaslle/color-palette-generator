@@ -37,6 +37,7 @@ export const Slider = () => {
           {!disabled && !splashScreen && (
             <motion.div
               className={s.slider}
+              data-hide-cursor={true}
               initial="hidden"
               animate="show"
               exit="hide"

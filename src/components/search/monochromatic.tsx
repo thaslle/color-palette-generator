@@ -3,7 +3,7 @@ import React from 'react'
 import { IconMonochromatic } from './icons'
 import { useStore } from '~/hooks/use-store'
 
-import s from './search.module.scss'
+import s from './monochromatic.module.scss'
 
 type MonochromaticProps = {
   isMonochromatic: boolean
@@ -45,3 +45,4 @@ export const Monochromatic: React.FC<MonochromaticProps> = ({
     </label>
   )
 }
+

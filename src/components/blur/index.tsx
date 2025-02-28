@@ -18,20 +18,20 @@ export const Blur: React.FC<BlurProps> = ({ children }) => {
   useEffect(() => {
     if (!animateRef.current) return
 
-    if (!loading && !splashScreen) {
+    if (!loading.state && !splashScreen) {
       // Play animation
       animateRef.current.setAttribute('values', `${motionBlur}; ${blur}`)
       animateRef.current.setAttribute('duration', '3s')
       animateRef.current.beginElement()
     }
 
-    if (loading && splashScreen) setSplashScreen(false)
+    if (loading.state && splashScreen) setSplashScreen(false)
   }, [loading])
 
   useEffect(() => {
     if (!animateRef.current) return
 
-    if (!loading && !splashScreen) {
+    if (!loading.state && !splashScreen) {
       // Play animation
       animateRef.current.setAttribute('values', `${blur}; ${blur}`)
       animateRef.current.setAttribute('duration', '0s')

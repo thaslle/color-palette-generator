@@ -60,7 +60,7 @@ export const Experience = () => {
 
   // Set a new blur value
   useEffect(() => {
-    if (!materialRef.current || loading || splashScreen) return
+    if (!materialRef.current || loading.state || splashScreen) return
     materialRef.current.uniforms.uUserBlur.value = blur
   }, [blur])
 
@@ -101,7 +101,7 @@ export const Experience = () => {
   // Change blur when loading
   useEffect(() => {
     if (!materialRef.current) return
-    setBlurTarget(loading || splashScreen ? 1 : 0)
+    setBlurTarget(loading.state || splashScreen ? 1 : 0)
   }, [loading])
 
   //Update shader time

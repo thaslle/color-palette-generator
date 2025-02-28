@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk'
-import { randomHexColor } from '~/utils/color'
+import { randomHexColor, delayExecution } from '~/utils/color'
 
 const groq = new Groq({
   apiKey: import.meta.env.VITE_GROQ_API_KEY,
@@ -12,6 +12,7 @@ export async function getGroqChatCompletion(
   test: boolean,
 ) {
   // Fake api
+
   if (test) {
     const palette = monochrome
       ? [
@@ -43,16 +44,16 @@ export async function getGroqChatCompletion(
   }
 
   const prompt = monochrome
-    ? `Generate a monochromatic color palette with 5 shades based on "${query}", optimized for UI design.
+    ? `Generate a monochromatic color palette with 5 shades inspired by "${query}", optimized for UI design.
     The palette must include both light and dark shades for contrast, with at least one dark shade and one light shade.
     Ensure the colors are harmonious and usable in a UI context.
     The response MUST BE ONLY a JSON array in the following format: [{ "name": "Color Name", "code": "#HexCode" }, ...]' }`
-    : `Generate a color palette with 5 colors based on "${query}", optimized for UI design.
+    : `Generate a color palette with 5 colors inspired by "${query}", optimized for UI design.
     The palette must include both light and dark shades for contrast, with at least one vibrant color, one dark shade and one light shade.
-    Ensure the colors are harmonious and usable in a UI context.
+    Ensure the colors are harmonious and usable in a UI context but not monochromatic.
     The response MUST BE ONLY a JSON array in the following format: [{ "name": "Color Name", "code": "#HexCode" }, ...]`
 
-  console.log(groq.chat)
+  //console.log(groq.chat)
   return groq.chat.completions.create({
     messages: [
       {
@@ -61,14 +62,6 @@ export async function getGroqChatCompletion(
       },
     ],
     model: 'llama-3.3-70b-versatile',
-  })
-}
-
-const delayExecution = (seconds: number) => {
-  return new Promise<void>((resolve) => {
-    setTimeout(() => {
-      resolve()
-    }, seconds * 500) // Convert seconds to milliseconds
   })
 }
 

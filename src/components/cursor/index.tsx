@@ -15,6 +15,8 @@ export const Cursor = () => {
 
   const [label, setLabel] = useState('')
   const [showActionHint, setShowActionHint] = useState(false)
+  const [hideCursor, setHideCursor] = useState(false)
+  const [darkCursor, setDarkCursor] = useState(false)
 
   const { x, y } = useFollowPointer(cursorRef)
 
@@ -29,13 +31,25 @@ export const Cursor = () => {
       const targetElement = e.target.closest('[data-label]')
       const targetLabel = targetElement?.getAttribute('data-label')
 
-      if (!targetElement || !targetLabel) return
+      const targetCursorElement = e.target.closest('[data-hide-cursor]')
+      const targetCursor = targetCursorElement ? true : false
+      setHideCursor(targetCursor)
+
+      const targetDarkCursorElement = e.target.closest('[data-dark-cursor]')
+      const targetDarkCursor =
+        targetDarkCursorElement?.getAttribute('data-dark-cursor') === 'true'
+      setDarkCursor(targetDarkCursor)
+
+      if (!targetLabel) return
 
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
       setLabel(targetLabel)
     }
 
     const onMouseOut = () => {
+      setHideCursor(false)
+      setDarkCursor(false)
+
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
 
       timeoutRef.current = setTimeout(() => {
@@ -65,15 +79,23 @@ export const Cursor = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
       if (actionRef.current) clearTimeout(actionRef.current)
     }
-  }, [hint])
+  }, [hint, hideCursor, darkCursor])
 
   return (
     <motion.div
       ref={cursorRef}
-      className={clsx(s.cursor, { [s.label]: label !== '' })}
+      className={clsx(
+        s.cursor,
+        { [s.label]: label !== '' },
+        { [s.dark]: darkCursor },
+      )}
       style={{ x, y }}
     >
-      <div className={s.pointer}></div>
+      <motion.div
+        className={s.pointer}
+        style={{ scale: hideCursor ? 0 : 1 }}
+        transition={{ duration: 0.5, delay: 0.2, ease: 'easeInOut' }}
+      ></motion.div>
       <div
         className={clsx(s.text, { [s.copied]: showActionHint })}
         style={{ width: `${label.length + 2}ch` }}

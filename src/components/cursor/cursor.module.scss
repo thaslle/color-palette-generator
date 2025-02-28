@@ -18,7 +18,7 @@
     height: 0.8rem;
 
     clip-path: inset(0 round 0.8rem);
-    background-color: #fff;
+    background-color: var(--color-light);
 
     transition: all var(--transition-duration) var(--transition-elastic);
   }
@@ -89,6 +89,16 @@
     .text {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  &.dark {
+    .pointer {
+      background-color: var(--color-dark);
+    }
+    .text {
+      color: var(--color-light);
+      background-color: var(--color-dark);
     }
   }
 

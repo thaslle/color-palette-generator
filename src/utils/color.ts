@@ -54,3 +54,11 @@ export const isColorPropsArray = (array: any): array is ColorProps[] => {
   )
 }
 
+export const delayExecution = (time: number) => {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, time)
+  })
+}
+

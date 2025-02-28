@@ -24,13 +24,13 @@ export const Background = ({ props }: { props: ColorProps }) => {
 
   const transition = {
     duration: 0.5,
-    delay: loading ? 0 : 0.3 + props.index * 0.1,
+    delay: loading.state ? 0 : 0.3 + (props.index ?? 0) * 0.1,
     ease: 'easeInOut',
   }
   return (
     <div className={s.background}>
       <motion.div
-        key={`${props.hex}${props.index}${props.name}`}
+        key={`${props.code}${props.index}${props.name}`}
         className={s.main}
         style={{ backgroundColor: props.code }}
         initial="hidden"

@@ -1,5 +1,7 @@
 .title {
   color: var(--color-dark);
+  max-height: 3rem;
+  overflow: hidden;
 
   &.dark {
     color: var(--color-light);

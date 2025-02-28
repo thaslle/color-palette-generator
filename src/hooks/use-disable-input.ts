@@ -9,7 +9,7 @@ export const useDisableInput = () => {
   useEffect(() => {
     if (splashScreen) return
 
-    if (loading) {
+    if (loading.state) {
       setDisabled(true)
       return
     }
@@ -25,3 +25,4 @@ export const useDisableInput = () => {
 
   return { disabled }
 }
+

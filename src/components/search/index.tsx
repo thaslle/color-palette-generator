@@ -1,29 +1,86 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Monochromatic } from './monochromatic'
 import { SearchBar } from './search-bar'
-import { Submit } from './submit'
+import { CustomInput } from './custom-input'
+import { Response } from './response'
 
+import { useDisableInput } from '~/hooks/use-disable-input'
 import { useStore } from '~/hooks/use-store'
 import { getGroqChatCompletion } from '~/lib/groq-api'
-import { isColorPropsArray } from '~/utils/color'
+import {
+  delayExecution,
+  isColorPropsArray,
+  randomHexColor,
+} from '~/utils/color'
 import { settings } from '~/config/settings'
 
 import s from './search.module.scss'
 
 export const Search = () => {
+  const { disabled } = useDisableInput()
+
   const showControls = useStore((state) => state.showControls)
   const setResponse = useStore((state) => state.setResponse)
   const setSplashScreen = useStore((state) => state.setSplashScreen)
   const setLoading = useStore((state) => state.setLoading)
-  const setCaret = useStore((state) => state.setCaret)
+
+  const placeholder = 'What’s the mood today?'
 
   const [searchQuery, setSearchQuery] = useState('')
+  const [lastSubmit, setLastSubmit] = useState('')
+  const [canSubmit, setCanSubmit] = useState(false)
+  const [showLoader, setShowLoader] = useState<number | null>(null)
+  const [error, setError] = useState(false)
   const [isMonochromatic, setIsMonochromatic] = useState(false)
 
+  const surpriseMe = async () => {
+    const sentences = [
+      'Life thrives on random moments',
+      'Surprises lead to new adventures',
+      'Chaos often sparks new ideas',
+      'Embrace randomness for true joy',
+      'Randomness can be really fun',
+    ]
+
+    const randomSentence =
+      sentences[Math.floor(Math.random() * sentences.length)]
+    const words = randomSentence.split(' ')
+
+    const response = {
+      name: searchQuery,
+      date: Date.now(),
+      colors: [
+        { name: words[0], code: randomHexColor() },
+        { name: words[1], code: randomHexColor() },
+        { name: words[2], code: randomHexColor() },
+        { name: words[3], code: randomHexColor() },
+        { name: words[4], code: randomHexColor() },
+      ],
+    }
+    // Waits a little to strike the animation
+    await delayExecution(500)
+
+    setResponse(response)
+    setSplashScreen(false)
+    setLoading(false)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
+    if (!canSubmit) return
+
     e.preventDefault()
     setLoading(true)
+    setCanSubmit(false)
+    setLastSubmit(searchQuery)
+    setShowLoader(Date.now())
+
+    const fSearchQuery = searchQuery.toLowerCase()
+
+    if (fSearchQuery === 'random' || fSearchQuery === 'surprise') {
+      surpriseMe()
+      return
+    }
 
     // Using fake API for tests
     try {
@@ -31,7 +88,7 @@ export const Search = () => {
       const chatCompletion = await getGroqChatCompletion(
         searchQuery,
         isMonochromatic,
-        settings.test, // Test true
+        settings.test,
       )
 
       const content = chatCompletion.choices[0]?.message?.content
@@ -44,12 +101,7 @@ export const Search = () => {
 
       // Try parsing the content
       let parsedContent
-      try {
-        parsedContent = JSON.parse(content)
-      } catch (error) {
-        console.error('Error parsing JSON:', error)
-        return
-      }
+      parsedContent = JSON.parse(content)
 
       // Check if the parsed content is a valid array
       if (!isColorPropsArray(parsedContent)) {
@@ -63,17 +115,41 @@ export const Search = () => {
         date: Date.now(),
         colors: parsedContent,
       }
-
       setResponse(response)
-      setSplashScreen(false)
-      setSearchQuery('')
-      setCaret({ show: false, x: 0 })
     } catch (error) {
-      console.error('Error fetching chat completion:', error)
+      // Set an error and remove it before 2 seconds
+      setError(true)
+
+      surpriseMe()
     } finally {
+      setSplashScreen(false)
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    setCanSubmit(searchQuery.length > 2)
+  }, [searchQuery])
+
+  // Remove the error after some time
+  useEffect(() => {
+    if (!error) return
+    const errorTimeout = setTimeout(() => setError(false), 2000)
+    return () => {
+      setError(false)
+      clearTimeout(errorTimeout)
+    }
+  }, [error])
+
+  // Wait a bit to remove the searchQuery
+  useEffect(() => {
+    if (!showLoader) return
+    const clearQueryTimeout = setTimeout(() => setSearchQuery(''), 1000)
+    return () => {
+      setSearchQuery('')
+      clearTimeout(clearQueryTimeout)
+    }
+  }, [showLoader])
 
   return (
     <div className={s.wrapper}>
@@ -81,6 +157,7 @@ export const Search = () => {
         {showControls && (
           <motion.div
             className={s.search}
+            data-hide-cursor={true}
             initial="hidden"
             animate="show"
             exit="hide"
@@ -106,17 +183,33 @@ export const Search = () => {
             }}
             transition={{ duration: 1, delay: 0.5, ease: 'easeInOut' }}
           >
-            <form className={s.form} onSubmit={handleSubmit}>
-              <SearchBar
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-              />
-              <Monochromatic
-                isMonochromatic={isMonochromatic}
-                setIsMonochromatic={setIsMonochromatic}
-              />
-              <Submit />
-            </form>
+            <div className={s.stack}>
+              <div className={s.response}>
+                <Response
+                  start={showLoader}
+                  error={error}
+                  searchQuery={lastSubmit}
+                />
+              </div>
+
+              <form className={s.form} onSubmit={handleSubmit}>
+                <SearchBar
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  placeholder={placeholder}
+                />
+                <CustomInput
+                  disabled={disabled}
+                  searchQuery={searchQuery}
+                  placeholder={placeholder}
+                  canSubmit={canSubmit}
+                />
+                <Monochromatic
+                  isMonochromatic={isMonochromatic}
+                  setIsMonochromatic={setIsMonochromatic}
+                />
+              </form>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

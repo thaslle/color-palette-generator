@@ -68,3 +68,8 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+@media only screen and (max-height: 720px) {
+  html {
+    font-size: 14px;
+  }
+}

@@ -33,7 +33,7 @@
 
   @media only screen and (max-width: 767px) {
     justify-content: flex-start;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
 
     .header {
       padding-block: 0;
@@ -41,6 +41,12 @@
       .title {
         font-size: 2.2rem;
       }
+    }
+  }
+
+  @media only screen and (max-height: 720px) {
+    .header .title {
+      font-size: 2rem;
     }
   }
 }

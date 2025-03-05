@@ -31,8 +31,9 @@
       grid-template-columns: repeat(5, 1fr);
     }
     @media only screen and (max-width: 767px) {
-      grid-template-rows: 17.5% 17.5% 17.5% 17.5% 30%;
+      padding-bottom: 7rem;
+      grid-template-rows: repeat(5, 1fr);
+      //grid-template-rows: 17.5% 17.5% 17.5% 17.5% 30%;
     }
   }
 }
-

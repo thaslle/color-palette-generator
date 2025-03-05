@@ -4,6 +4,7 @@ import { Monochromatic } from './monochromatic'
 import { SearchBar } from './search-bar'
 import { CustomInput } from './custom-input'
 import { Response } from './response'
+import { History } from './history'
 
 import { useDisableInput } from '~/hooks/use-disable-input'
 import { useStore } from '~/hooks/use-store'
@@ -12,6 +13,7 @@ import {
   delayExecution,
   isColorPropsArray,
   randomHexColor,
+  updateStorage,
 } from '~/utils/color'
 import { settings } from '~/config/settings'
 
@@ -36,11 +38,11 @@ export const Search = () => {
 
   const surpriseMe = async () => {
     const sentences = [
-      'Life thrives on random moments',
-      'Surprises lead to new adventures',
-      'Chaos often sparks new ideas',
-      'Embrace randomness for true joy',
-      'Randomness can be really fun',
+      'Life Thrives On Random Moments',
+      'Surprises Lead To New Adventures',
+      'Chaos Often Sparks New Ideas',
+      'Embrace Randomness For True Joy',
+      'Randomness Can Be Really Fun',
     ]
 
     const randomSentence =
@@ -59,9 +61,10 @@ export const Search = () => {
       ],
     }
     // Waits a little to strike the animation
-    await delayExecution(500)
+    await delayExecution(1000)
 
     setResponse(response)
+    updateStorage(response)
     setSplashScreen(false)
     setLoading(false)
   }
@@ -120,6 +123,7 @@ export const Search = () => {
         colors: parsedContent,
       }
       setResponse(response)
+      updateStorage(response)
     } catch (error) {
       // Set an error and remove it before 2 seconds
       setError(true)
@@ -196,6 +200,12 @@ export const Search = () => {
                 />
               </div>
 
+              {settings.test && (
+                <div className={s.history}>
+                  <History searchQuery={searchQuery} />
+                </div>
+              )}
+
               <form className={s.form} onSubmit={handleSubmit}>
                 <SearchBar
                   searchQuery={searchQuery}
@@ -220,4 +230,3 @@ export const Search = () => {
     </div>
   )
 }
-

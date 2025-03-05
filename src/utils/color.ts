@@ -1,4 +1,4 @@
-import { RGB, FormatPaletteProps, ColorProps } from './types'
+import { RGB, FormatPaletteProps, ColorProps, PaletteProps } from './types'
 
 export const getHexCode = (colorCode: string): string => {
   return colorCode.replace('#', '')
@@ -60,5 +60,16 @@ export const delayExecution = (time: number) => {
       resolve()
     }, time)
   })
+}
+
+export const updateStorage = (palette: FormatPaletteProps) => {
+  const storedData = localStorage.getItem('palette')
+  const data = storedData ? JSON.parse(storedData) : []
+
+  // Add the new object to the array
+  data.push(palette)
+
+  // Save the updated array back to localStorage
+  localStorage.setItem('palette', JSON.stringify(data))
 }
 

@@ -1,9 +1,6 @@
 .color {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-
   padding: 2rem 1rem;
 
   &.dark {
@@ -22,13 +19,15 @@
       font-weight: 750;
       text-transform: uppercase;
     }
-    .description {
-      height: 1.2rem;
-    }
 
     &:active {
       transform: translate(1px, 1px);
     }
+  }
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
   }
 
   @media only screen and (max-width: 767px) {
@@ -36,6 +35,9 @@
     padding: 0.5rem 1rem;
 
     .header {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
       padding-block: 0;
 
       .title {

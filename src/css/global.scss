@@ -13,9 +13,9 @@
 
 :root {
   --font-family: 'Inter', 'Arial', 'Helvetica', 'system-ui';
-  --color-dark: #444;
+  --color-dark: #222;
   --color-light: #fff;
-  --color-icons: #555;
+  --color-icons: #333;
   --color-highlight: #dfdfdf;
   --color-material: rgba(255, 255, 255, 0.9);
   --background: #000;
@@ -66,10 +66,4 @@ body {
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-}
-
-@media only screen and (max-height: 720px) {
-  html {
-    font-size: 14px;
-  }
 }

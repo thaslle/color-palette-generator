@@ -7,6 +7,7 @@ import CustomShaderMaterial from 'three-custom-shader-material'
 import { ColorGroupProps } from '~/utils/types'
 import { useStore } from '~/hooks/use-store'
 import { useIsMobile } from '~/hooks/use-mobile'
+import { useDvh } from '~/hooks/use-dvh'
 
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
@@ -21,6 +22,7 @@ export const Experience = () => {
   const splashScreen = useStore((state) => state.splashScreen)
   const showControls = useStore((state) => state.showControls)
   const isMobile = useIsMobile()
+  const paddingBottom = useDvh(7)
 
   const [blurTarget, setBlurTarget] = useState(1)
   const [colorTarget, setColorTarget] = useState(0)
@@ -39,6 +41,7 @@ export const Experience = () => {
       uBlurProgress: { value: 0 },
       uColorProgress: { value: 0 },
       uControlsProgress: { value: 0 },
+      uPaddingBottom: { value: paddingBottom },
       uMotionBlur: { value: motionBlur },
       uUserBlur: { value: blur },
       uPrevColor1: { value: new Color('#000000') },
@@ -54,6 +57,12 @@ export const Experience = () => {
     }),
     [],
   )
+
+  // If padding changes
+  useEffect(() => {
+    if (!materialRef.current) return
+    materialRef.current.uniforms.uPaddingBottom.value = paddingBottom
+  }, [paddingBottom])
 
   // When isMobile Changes
   useEffect(() => {
@@ -159,4 +168,3 @@ export const Experience = () => {
     </ScreenSizer>
   )
 }
-

@@ -31,7 +31,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         placeholder={placeholder}
         required
         spellCheck="false"
-        autoComplete="false"
+        autoComplete="off"
         value={searchQuery}
         disabled={disabled}
         maxLength={40}

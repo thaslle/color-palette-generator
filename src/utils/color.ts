@@ -1,4 +1,4 @@
-import { RGB, FormatPaletteProps, ColorProps, PaletteProps } from './types'
+import { RGB, FormatPaletteProps, ColorProps } from './types'
 
 export const getHexCode = (colorCode: string): string => {
   return colorCode.replace('#', '')

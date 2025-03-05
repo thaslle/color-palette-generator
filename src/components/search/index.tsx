@@ -4,7 +4,6 @@ import { Monochromatic } from './monochromatic'
 import { SearchBar } from './search-bar'
 import { CustomInput } from './custom-input'
 import { Response } from './response'
-import { History } from './history'
 
 import { useDisableInput } from '~/hooks/use-disable-input'
 import { useStore } from '~/hooks/use-store'
@@ -70,9 +69,10 @@ export const Search = () => {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
     if (!canSubmit) return
 
-    e.preventDefault()
     setLoading(true)
     setCanSubmit(false)
     setLastSubmit(searchQuery)
@@ -199,12 +199,6 @@ export const Search = () => {
                   searchQuery={lastSubmit}
                 />
               </div>
-
-              {settings.test && (
-                <div className={s.history}>
-                  <History searchQuery={searchQuery} />
-                </div>
-              )}
 
               <form className={s.form} onSubmit={handleSubmit}>
                 <SearchBar

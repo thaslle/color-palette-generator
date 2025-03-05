@@ -18,6 +18,7 @@
       font-size: min(2.5rem, 4vw);
       font-weight: 750;
       text-transform: uppercase;
+      font-feature-settings: 'tnum' 1;
     }
 
     &:active {

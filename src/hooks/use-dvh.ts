@@ -5,6 +5,42 @@ export const useDvh = (height: number) => {
   const [viewportHeight, setViewportHeight] = useState(0)
 
   // Get the root font size dynamically (e.g., for responsive layouts)
+  // useEffect(() => {
+  //   const fontSize = parseFloat(
+  //     getComputedStyle(document.documentElement).fontSize,
+  //   )
+  //   setRootFontSize(fontSize)
+
+  //   // Update viewport height on resize or visualViewport change
+  //   const updateViewportHeight = () => {
+  //     if (window.visualViewport) {
+  //       setViewportHeight(window.visualViewport.height)
+  //     } else {
+  //       setViewportHeight(window.innerHeight)
+  //     }
+  //   }
+
+  //   // Initial update
+  //   updateViewportHeight()
+
+  //   // Listen to resize events (and visualViewport changes for Safari on iOS)
+  //   window.addEventListener('resize', updateViewportHeight)
+  //   if (window.visualViewport) {
+  //     window.visualViewport.addEventListener('resize', updateViewportHeight)
+  //   }
+
+  //   // Clean up event listener
+  //   return () => {
+  //     window.removeEventListener('resize', updateViewportHeight)
+  //     if (window.visualViewport) {
+  //       window.visualViewport.removeEventListener(
+  //         'resize',
+  //         updateViewportHeight,
+  //       )
+  //     }
+  //   }
+  // }, [])
+
   useEffect(() => {
     const fontSize = parseFloat(
       getComputedStyle(document.documentElement).fontSize,
@@ -12,33 +48,12 @@ export const useDvh = (height: number) => {
     setRootFontSize(fontSize)
 
     // Update viewport height on resize or visualViewport change
-    const updateViewportHeight = () => {
-      if (window.visualViewport) {
-        setViewportHeight(window.visualViewport.height)
-      } else {
-        setViewportHeight(window.innerHeight)
-      }
-    }
 
-    // Initial update
-    updateViewportHeight()
+    const viewportHeight = window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight
 
-    // Listen to resize events (and visualViewport changes for Safari on iOS)
-    window.addEventListener('resize', updateViewportHeight)
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', updateViewportHeight)
-    }
-
-    // Clean up event listener
-    return () => {
-      window.removeEventListener('resize', updateViewportHeight)
-      if (window.visualViewport) {
-        window.visualViewport.removeEventListener(
-          'resize',
-          updateViewportHeight,
-        )
-      }
-    }
+    setViewportHeight(viewportHeight)
   }, [])
 
   // Convert `height` (in rem) to pixels
@@ -49,3 +64,4 @@ export const useDvh = (height: number) => {
 
   return heightPercentage
 }
+

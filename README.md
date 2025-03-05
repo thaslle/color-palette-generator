@@ -7,7 +7,7 @@ MoodHue is an AI-powered tool that helps you create personalized color palettes 
 [Check it out](https://moodhue.vercel.app/). (_use "." and "," to access the debug options._)
 
 ## Technologies
-- [React] (https://react.dev/)
+- [React](https://react.dev/)
 - [Three.js](https://threejs.org/)
 - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
 - [Drei](https://github.com/pmndrs/drei)

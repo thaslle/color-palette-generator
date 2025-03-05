@@ -45,6 +45,7 @@ export async function getGroqChatCompletion(
 
   const prompt = monochrome
     ? `Generate a monochromatic color palette with 5 shades inspired by "${query}", optimized for UI design.
+    Try to avoid gray unless it is the most proeminent color for this search.
     The palette must include both light and dark shades for contrast, with at least one dark shade and one light shade.
     Ensure the colors are harmonious and usable in a UI context.
     The response MUST BE ONLY a JSON array in the following format: [{ "name": "Color Name", "code": "#HexCode" }, ...]' }`
